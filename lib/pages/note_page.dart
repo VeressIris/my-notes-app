@@ -20,6 +20,25 @@ class _NotePageState extends State<NotePage> {
               Navigator.of(context).pop();
             },
           ),
+          middle: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CupertinoButton(
+                child: const Icon(CupertinoIcons.arrow_uturn_left,
+                    color: CupertinoColors.systemGrey),
+                onPressed: () {
+                  // undo changes
+                },
+              ),
+              CupertinoButton(
+                child: const Icon(CupertinoIcons.arrow_uturn_right,
+                    color: CupertinoColors.systemGrey),
+                onPressed: () {
+                  // redo changes
+                },
+              )
+            ],
+          ),
           trailing: CupertinoButton(
               child: const Icon(
                 CupertinoIcons.trash,
