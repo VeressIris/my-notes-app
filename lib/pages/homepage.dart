@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:my_notes_app/pages/note_page.dart';
 import 'package:my_notes_app/widgets/note.dart';
 
 class Homepage extends StatefulWidget {
@@ -71,6 +72,7 @@ class _HomePageState extends State<Homepage> {
       navigationBar: const CupertinoNavigationBar(
         leading: Icon(CupertinoIcons.bars),
         middle: Text('My Notes'),
+        padding: EdgeInsetsDirectional.symmetric(horizontal: 6),
       ),
       child: SafeArea(
         child: Stack(
@@ -92,7 +94,10 @@ class _HomePageState extends State<Homepage> {
               child: CupertinoButton(
                 padding: const EdgeInsets.all(0),
                 onPressed: () {
-                  // Action when button is pressed
+                  Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                          builder: (context) => const NotePage(title: "")));
                 },
                 color: CupertinoColors.activeOrange,
                 borderRadius: BorderRadius.circular(30.0),

@@ -27,8 +27,8 @@ class _NoteState extends State<Note> {
                 content: Container(
                   margin: const EdgeInsets.only(top: 8),
                   child: const Text(
-                    'Are you sure you want to delete this note?',
-                    style: TextStyle(fontSize: 16)),
+                      'Are you sure you want to delete this note?',
+                      style: TextStyle(fontSize: 16)),
                 ),
                 actions: [
                   CupertinoDialogAction(
@@ -78,6 +78,9 @@ class _NoteState extends State<Note> {
                     Text(
                       widget.content,
                       style: TextStyle(
+                          color: widget.title.isEmpty
+                              ? CupertinoColors.white
+                              : CupertinoColors.systemGrey,
                           fontSize: widget.title.isEmpty ? 18 : 16,
                           fontWeight: widget.title.isEmpty
                               ? FontWeight.bold
@@ -88,8 +91,9 @@ class _NoteState extends State<Note> {
                     Text(
                       widget.dateCreated,
                       style: const TextStyle(
-                        fontSize: 16,
-                      ),
+                          color: CupertinoColors.systemGrey,
+                          fontSize: 16,
+                          height: 1.35),
                     ),
                   ],
                 ),
