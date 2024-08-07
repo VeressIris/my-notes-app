@@ -44,7 +44,8 @@ class _HomePageState extends State<Homepage> {
     },
     {
       'title': 'My second whatever note',
-      'content': 'This is the content of my second whatever note BLAH BLAH BLAH BLAH',
+      'content':
+          'This is the content of my second whatever note BLAH BLAH BLAH BLAH',
       'dateCreated': '2022-01-04'
     },
     {
@@ -75,7 +76,7 @@ class _HomePageState extends State<Homepage> {
         child: Stack(
           children: [
             SingleChildScrollView(
-              child: CupertinoListSection(
+              child: Column(
                 children: notes.map((note) {
                   return Note(
                     title: note['title']!,
