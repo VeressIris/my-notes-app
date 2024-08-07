@@ -38,7 +38,7 @@ class _NoteState extends State<Note> {
                   CupertinoDialogAction(
                     child: const Text(
                       'Delete',
-                      style: TextStyle(color: CupertinoColors.systemRed),
+                      style: TextStyle(color: CupertinoColors.destructiveRed),
                     ),
                     onPressed: () {
                       Navigator.pop(context);
