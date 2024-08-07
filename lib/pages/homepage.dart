@@ -39,17 +39,17 @@ class _HomePageState extends State<Homepage> {
     },
     {
       'title': 'My second whatever note',
-      'content': 'This is the content of my second whatever note',
+      'content': 'This is the content of my second whatever note blah blah',
       'dateCreated': '2022-01-04'
     },
     {
       'title': 'My second whatever note',
-      'content': 'This is the content of my second whatever note',
+      'content': 'This is the content of my second whatever note BLAH BLAH BLAH BLAH',
       'dateCreated': '2022-01-04'
     },
     {
-      'title': 'My second whatever note',
-      'content': 'This is the content of my second whatever note',
+      'title': 'My note',
+      'content': 'This is the content of this note ahahahahaha',
       'dateCreated': '2022-01-04'
     },
     {

@@ -22,7 +22,6 @@ class _NoteState extends State<Note> {
       padding: const EdgeInsets.all(8),
       child: Container(
           constraints: const BoxConstraints(
-            maxHeight: 85,
             minWidth: 380,
             maxWidth: 380,
           ),
@@ -46,12 +45,12 @@ class _NoteState extends State<Note> {
                 Text(
                   widget.content,
                   style: TextStyle(
-                    fontSize: widget.title.isEmpty ? 18 : 16,
-                    fontWeight: widget.title.isEmpty
-                        ? FontWeight.bold
-                        : FontWeight.normal,
-                    height: 1.5,
-                  ),
+                      fontSize: widget.title.isEmpty ? 18 : 16,
+                      fontWeight: widget.title.isEmpty
+                          ? FontWeight.bold
+                          : FontWeight.normal,
+                      height: 1.5,
+                      overflow: TextOverflow.ellipsis),
                 ),
                 Text(
                   widget.dateCreated,
