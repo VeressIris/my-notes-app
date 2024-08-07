@@ -19,21 +19,49 @@ class _NoteState extends State<Note> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8), // Adjust padding as needed
+      padding: const EdgeInsets.all(8),
       child: Container(
-        constraints: const BoxConstraints(
-          maxHeight: 70,
-        ),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: CupertinoListTile(
-          title: Text(widget.title),
-          subtitle: Text(widget.content),
-          trailing: Text(widget.dateCreated),
-          padding: const EdgeInsets.all(10),
-        ),
-      ),
+          constraints: const BoxConstraints(
+            maxHeight: 85,
+            minWidth: 380,
+            maxWidth: 380,
+          ),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            color: CupertinoColors.activeGreen,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (widget.title.isNotEmpty)
+                  Text(
+                    widget.title,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                Text(
+                  widget.content,
+                  style: TextStyle(
+                    fontSize: widget.title.isEmpty ? 18 : 16,
+                    fontWeight: widget.title.isEmpty
+                        ? FontWeight.bold
+                        : FontWeight.normal,
+                    height: 1.5,
+                  ),
+                ),
+                Text(
+                  widget.dateCreated,
+                  style: const TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
+              ],
+            ),
+          )),
     );
   }
 }

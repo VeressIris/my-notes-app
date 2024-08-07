@@ -33,7 +33,7 @@ class _HomePageState extends State<Homepage> {
       'dateCreated': '2022-01-04'
     },
     {
-      'title': 'My second whatever note',
+      'title': '',
       'content': 'This is the content of my second whatever note',
       'dateCreated': '2022-01-04'
     },
