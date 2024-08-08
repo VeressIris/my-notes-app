@@ -17,70 +17,85 @@ class _NotePageState extends State<NotePage> {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-        navigationBar: CupertinoNavigationBar(
-          leading: CupertinoNavigationBarBackButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
+      navigationBar: CupertinoNavigationBar(
+        leading: CupertinoNavigationBarBackButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        middle: QuillToolbar(
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              QuillToolbarHistoryButton(
+                isUndo: true,
+                controller: _controller,
+              ),
+              QuillToolbarHistoryButton(
+                isUndo: false,
+                controller: _controller,
+              ),
+            ],
           ),
-          middle: QuillToolbar(
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                QuillToolbarHistoryButton(
-                  isUndo: true,
-                  controller: _controller,
-                ),
-                QuillToolbarHistoryButton(
-                  isUndo: false,
-                  controller: _controller,
-                ),
-              ],
+        ),
+        trailing: CupertinoButton(
+          child: const Icon(
+            CupertinoIcons.trash,
+            color: CupertinoColors.destructiveRed,
+            size: 24,
+          ),
+          onPressed: () {},
+        ),
+        backgroundColor: CupertinoColors.black,
+        padding: const EdgeInsetsDirectional.symmetric(horizontal: 2),
+      ),
+      child: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              // Wrap the scrollable content
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Column(
+                crossAxisAlignment:
+                    CrossAxisAlignment.start, // Align items to start
+                children: [
+                  CupertinoTextField(
+                    placeholder: 'Title',
+                    placeholderStyle: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: CupertinoColors.systemGrey3,
+                    ),
+                    minLines: null,
+                    maxLines: null,
+                    expands: true,
+                    style: const TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    decoration: const BoxDecoration(border: null),
+                    textInputAction:
+                        TextInputAction.done, // Prevent new lines on Enter
+                    onTapOutside: (event) => FocusScope.of(context).unfocus(),
+                  ),
+                  const SizedBox(
+                      height: 8), // Add spacing between title and editor
+                  QuillEditor.basic(
+                    controller: _controller,
+                    configurations: QuillEditorConfigurations(
+                      autoFocus: true,
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      onTapOutside: (event, focusNode) =>
+                          FocusScope.of(context).unfocus(),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-          trailing: CupertinoButton(
-              child: const Icon(
-                CupertinoIcons.trash,
-                color: CupertinoColors.destructiveRed,
-                size: 24,
-              ),
-              onPressed: () {}),
-          backgroundColor: CupertinoColors.black,
-          padding: const EdgeInsetsDirectional.symmetric(horizontal: 2),
-        ),
-        child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Column(
-              children: [
-                CupertinoTextField(
-                  placeholder: 'Title',
-                  placeholderStyle: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: CupertinoColors.systemGrey3),
-                  minLines: null,
-                  maxLines: null,
-                  expands: true,
-                  style: const TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  decoration: const BoxDecoration(border: null),
-                  textInputAction:
-                      TextInputAction.done, // Prevent new lines on Enter
-                  onTapOutside: (event) => FocusScope.of(context).unfocus(),
-                ),
-                Expanded(
-                    child: QuillEditor.basic(
-                  controller: _controller,
-                  configurations: QuillEditorConfigurations(
-                    autoFocus: true,
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    onTapOutside: (event, focusNode) =>
-                        FocusScope.of(context).unfocus(),
-                  ),
-                )),
-                MyQuillToolbar(controller: _controller),
-              ],
-            )));
+          MyQuillToolbar(
+              controller: _controller), // Fixed toolbar at the bottom
+        ],
+      ),
+    );
   }
 }
