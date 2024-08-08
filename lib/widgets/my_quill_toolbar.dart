@@ -21,14 +21,6 @@ class MyQuillToolbar extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         child: Row(
           children: [
-            QuillToolbarHistoryButton(
-              isUndo: true,
-              controller: controller,
-            ),
-            QuillToolbarHistoryButton(
-              isUndo: false,
-              controller: controller,
-            ),
             QuillToolbarToggleStyleButton(
               options: const QuillToolbarToggleStyleButtonOptions(),
               controller: controller,

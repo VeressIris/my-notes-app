@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:my_notes_app/widgets/my_quill_toolbar.dart';
 
@@ -24,24 +23,20 @@ class _NotePageState extends State<NotePage> {
               Navigator.of(context).pop();
             },
           ),
-          middle: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              CupertinoButton(
-                child: const Icon(CupertinoIcons.arrow_uturn_left,
-                    color: CupertinoColors.systemGrey),
-                onPressed: () {
-                  // undo changes
-                },
-              ),
-              CupertinoButton(
-                child: const Icon(CupertinoIcons.arrow_uturn_right,
-                    color: CupertinoColors.systemGrey),
-                onPressed: () {
-                  // redo changes
-                },
-              )
-            ],
+          middle: QuillToolbar(
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                QuillToolbarHistoryButton(
+                  isUndo: true,
+                  controller: _controller,
+                ),
+                QuillToolbarHistoryButton(
+                  isUndo: false,
+                  controller: _controller,
+                ),
+              ],
+            ),
           ),
           trailing: CupertinoButton(
               child: const Icon(
@@ -80,7 +75,8 @@ class _NotePageState extends State<NotePage> {
                   configurations: QuillEditorConfigurations(
                     autoFocus: true,
                     padding: const EdgeInsets.symmetric(horizontal: 8),
-                    onTapOutside: (event, focusNode) => FocusScope.of(context).unfocus(),
+                    onTapOutside: (event, focusNode) =>
+                        FocusScope.of(context).unfocus(),
                   ),
                 )),
                 MyQuillToolbar(controller: _controller),
