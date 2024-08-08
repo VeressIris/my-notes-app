@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:my_notes_app/pages/note_page.dart';
 
 class Note extends StatefulWidget {
   const Note(
@@ -48,6 +49,13 @@ class _NoteState extends State<Note> {
           ],
         ),
       ),
+      onTap: () {
+        Navigator.push(
+            context,
+            CupertinoPageRoute(
+                builder: (context) =>
+                    NotePage(title: widget.title, content: widget.content)));
+      },
       child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
           child: Container(

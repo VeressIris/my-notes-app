@@ -94,12 +94,12 @@ class _HomePageState extends State<Homepage> {
               child: CupertinoButton(
                 padding: const EdgeInsets.all(0),
                 onPressed: () {
+                  // open new empty note
                   Navigator.push(
                       context,
                       CupertinoPageRoute(
-                          builder: (context) => const NotePage(
-                              title: "",
-                              content: "")));
+                          builder: (context) =>
+                              const NotePage(title: "", content: "")));
                 },
                 color: CupertinoColors.activeOrange,
                 borderRadius: BorderRadius.circular(30.0),
