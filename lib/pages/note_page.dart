@@ -77,8 +77,6 @@ class _NotePageState extends State<NotePage> {
                         TextInputAction.done, // Prevent new lines on Enter
                     onTapOutside: (event) => FocusScope.of(context).unfocus(),
                   ),
-                  const SizedBox(
-                      height: 8), // Add spacing between title and editor
                   QuillEditor.basic(
                     controller: _controller,
                     configurations: QuillEditorConfigurations(
@@ -92,8 +90,7 @@ class _NotePageState extends State<NotePage> {
               ),
             ),
           ),
-          MyQuillToolbar(
-              controller: _controller), // Fixed toolbar at the bottom
+          MyQuillToolbar(controller: _controller),
         ],
       ),
     );
