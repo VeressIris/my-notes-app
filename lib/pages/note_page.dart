@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_quill/flutter_quill.dart';
+import 'package:my_notes_app/widgets/my_quill_toolbar.dart';
 
 class NotePage extends StatefulWidget {
   const NotePage({super.key, required this.title});
@@ -11,6 +13,8 @@ class NotePage extends StatefulWidget {
 }
 
 class _NotePageState extends State<NotePage> {
+  final QuillController _controller = QuillController.basic();
+
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
@@ -71,52 +75,15 @@ class _NotePageState extends State<NotePage> {
                   onTapOutside: (event) => FocusScope.of(context).unfocus(),
                 ),
                 Expanded(
-                  child: SingleChildScrollView(
-                    child: CupertinoTextField(
-                      minLines: null,
-                      maxLines: null,
-                      expands: true,
-                      autofocus: true,
-                      decoration: const BoxDecoration(border: null),
-                      onTapOutside: (event) => FocusScope.of(context).unfocus(),
-                    ),
+                    child: QuillEditor.basic(
+                  controller: _controller,
+                  configurations: QuillEditorConfigurations(
+                    autoFocus: true,
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    onTapOutside: (event, focusNode) => FocusScope.of(context).unfocus(),
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    CupertinoButton(
-                      child: const Icon(CupertinoIcons.check_mark_circled),
-                      onPressed: () {
-                        // insert checkmark
-                      },
-                    ),
-                    CupertinoButton(
-                      child: const Icon(CupertinoIcons.italic),
-                      onPressed: () {
-                        // cycle through styling options (italic->bold->underline->none)
-                      },
-                    ),
-                    CupertinoButton(
-                      child: const Icon(CupertinoIcons.list_bullet),
-                      onPressed: () {
-                        // cycle through list types (bullet->numbered->none)
-                      },
-                    ),
-                    CupertinoButton(
-                      child: const Icon(CupertinoIcons.increase_indent),
-                      onPressed: () {
-                        // cycle through indentation (middle->right->left)
-                      },
-                    ),
-                    CupertinoButton(
-                      child: const Icon(CupertinoIcons.paintbrush),
-                      onPressed: () {
-                        // open color picker and highlight text with that color
-                      },
-                    )
-                  ],
-                )
+                )),
+                MyQuillToolbar(controller: _controller),
               ],
             )));
   }
