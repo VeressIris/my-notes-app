@@ -3,16 +3,30 @@ import 'package:flutter_quill/flutter_quill.dart';
 import 'package:my_notes_app/widgets/my_quill_toolbar.dart';
 
 class NotePage extends StatefulWidget {
-  const NotePage({super.key, required this.title});
+  const NotePage({super.key, required this.title, required this.content});
 
   final String title;
+  final String content;
 
   @override
   State<NotePage> createState() => _NotePageState();
 }
 
 class _NotePageState extends State<NotePage> {
-  final QuillController _controller = QuillController.basic();
+  late final QuillController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Convert the plain text content into a Quill Document
+    final doc = Document()..insert(0, widget.content);
+
+    _controller = QuillController(
+      document: doc,
+      selection: const TextSelection.collapsed(offset: 0),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,13 +67,11 @@ class _NotePageState extends State<NotePage> {
         children: [
           Expanded(
             child: SingleChildScrollView(
-              // Wrap the scrollable content
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Column(
-                crossAxisAlignment:
-                    CrossAxisAlignment.start, // Align items to start
                 children: [
                   CupertinoTextField(
+                    controller: TextEditingController(text: widget.title),
                     placeholder: 'Title',
                     placeholderStyle: const TextStyle(
                       fontWeight: FontWeight.bold,
@@ -80,7 +92,7 @@ class _NotePageState extends State<NotePage> {
                   QuillEditor.basic(
                     controller: _controller,
                     configurations: QuillEditorConfigurations(
-                      autoFocus: true,
+                      autoFocus: widget.content.isEmpty ? true : false,
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       onTapOutside: (event, focusNode) =>
                           FocusScope.of(context).unfocus(),
@@ -94,5 +106,11 @@ class _NotePageState extends State<NotePage> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }

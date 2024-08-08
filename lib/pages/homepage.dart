@@ -97,7 +97,9 @@ class _HomePageState extends State<Homepage> {
                   Navigator.push(
                       context,
                       CupertinoPageRoute(
-                          builder: (context) => const NotePage(title: "")));
+                          builder: (context) => const NotePage(
+                              title: "",
+                              content: "")));
                 },
                 color: CupertinoColors.activeOrange,
                 borderRadius: BorderRadius.circular(30.0),
