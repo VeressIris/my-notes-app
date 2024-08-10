@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:my_notes_app/pages/note_page.dart';
 import 'package:my_notes_app/widgets/note.dart';
 
@@ -12,6 +13,8 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomePageState extends State<Homepage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   final List<Map<String, String>> notes = [
     {
       'title': 'My first note',
@@ -43,38 +46,32 @@ class _HomePageState extends State<Homepage> {
       'content': 'This is the content of my second whatever note blah blah',
       'dateCreated': '2022-01-04'
     },
+    {'title': '', 'content': 'BLAH BLAH BLAH', 'dateCreated': '2022-01-04'},
     {
-      'title': 'My second whatever note',
+      'title': 'My THIRD whatever note',
       'content':
-          'This is the content of my second whatever note BLAH BLAH BLAH BLAH',
-      'dateCreated': '2022-01-04'
-    },
-    {
-      'title': 'My note',
-      'content': 'This is the content of this note ahahahahaha',
-      'dateCreated': '2022-01-04'
-    },
-    {
-      'title': 'My second whatever note',
-      'content': 'This is the content of my second whatever note',
-      'dateCreated': '2022-01-04'
-    },
-    {
-      'title': 'My second whatever note',
-      'content': 'This is the content of my second whatever note',
-      'dateCreated': '2022-01-04'
+          'This is the content of my third whatever note ahaha blah blah',
+      'dateCreated': '2022-01-09'
     },
   ];
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(
-        leading: Icon(CupertinoIcons.bars),
-        middle: Text('My Notes'),
-        padding: EdgeInsetsDirectional.symmetric(horizontal: 6),
+    return Scaffold(
+      backgroundColor: CupertinoColors.black,
+      key: _scaffoldKey,
+      appBar: CupertinoNavigationBar(
+        leading: CupertinoButton(
+          padding: const EdgeInsets.all(0),
+          child: const Icon(CupertinoIcons.bars),
+          onPressed: () {
+            _scaffoldKey.currentState?.openDrawer();
+          },
+        ),
+        middle: Text(widget.title),
+        padding: const EdgeInsetsDirectional.symmetric(horizontal: 6),
       ),
-      child: SafeArea(
+      body: SafeArea(
         child: Stack(
           children: [
             SingleChildScrollView(
@@ -96,10 +93,12 @@ class _HomePageState extends State<Homepage> {
                 onPressed: () {
                   // open new empty note
                   Navigator.push(
-                      context,
-                      CupertinoPageRoute(
-                          builder: (context) =>
-                              const NotePage(title: "", content: "")));
+                    context,
+                    CupertinoPageRoute(
+                      builder: (context) =>
+                          const NotePage(title: "", content: ""),
+                    ),
+                  );
                 },
                 color: CupertinoColors.activeOrange,
                 borderRadius: BorderRadius.circular(30.0),
@@ -110,6 +109,66 @@ class _HomePageState extends State<Homepage> {
                 ),
               ),
             ),
+          ],
+        ),
+      ),
+      drawer: Drawer(
+        child: CupertinoListSection(
+          children: [
+            Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+                  alignment: Alignment.topCenter,
+                height: 85,
+                child: const Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(right: 16),
+                      child: Icon(CupertinoIcons.person, size: 48),
+                    ),
+                    Text('John Doe',
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold)),
+                  ],
+                )),
+            CupertinoListTile(
+              title: const Text('Public notes'),
+              leading: const Icon(CupertinoIcons.lock_open_fill),
+              trailing: const CupertinoListTileChevron(),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                    builder: (context) => const Homepage(title: "My notes"),
+                  ),
+                );
+              },
+            ),
+            CupertinoListTile(
+                title: const Text('Private notes'),
+                leading: const Icon(CupertinoIcons.lock_fill),
+                trailing: const CupertinoListTileChevron(),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: (context) =>
+                          const Homepage(title: "My private notes"),
+                    ),
+                  );
+                }),
+            CupertinoListTile(
+                title: const Text('Settings'),
+                leading: const Icon(CupertinoIcons.settings),
+                trailing: const CupertinoListTileChevron(),
+                onTap: () {}),
+            CupertinoListTile(
+                title: const Text('Logout'),
+                leading: const Icon(Icons.logout),
+                onTap: () {}),
           ],
         ),
       ),
