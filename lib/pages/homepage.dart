@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_notes_app/pages/note_page.dart';
+import 'package:my_notes_app/pages/tags_page.dart';
 import 'package:my_notes_app/widgets/note.dart';
 
 class Homepage extends StatefulWidget {
@@ -86,8 +87,8 @@ class _HomePageState extends State<Homepage> {
               ),
             ),
             Positioned(
-              bottom: 32.0,
-              right: 32.0,
+              bottom: 32,
+              right: 32,
               child: CupertinoButton(
                 padding: const EdgeInsets.all(0),
                 onPressed: () {
@@ -118,7 +119,7 @@ class _HomePageState extends State<Homepage> {
             Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-                  alignment: Alignment.topCenter,
+                alignment: Alignment.topCenter,
                 height: 85,
                 child: const Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -157,6 +158,20 @@ class _HomePageState extends State<Homepage> {
                     CupertinoPageRoute(
                       builder: (context) =>
                           const Homepage(title: "My private notes"),
+                    ),
+                  );
+                }),
+            CupertinoListTile(
+                title: const Text('Tags'),
+                leading: const Icon(CupertinoIcons.tag_fill),
+                trailing: const CupertinoListTileChevron(),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: (context) =>
+                          const TagsPage(),
                     ),
                   );
                 }),
