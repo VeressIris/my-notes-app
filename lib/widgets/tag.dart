@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 class Tag extends StatefulWidget {
   const Tag({super.key, required this.name});
@@ -48,7 +47,7 @@ class _TagState extends State<Tag> {
               AnimatedSwitcher(
                 duration: Duration(
                     milliseconds:
-                        transitionDuration), // Duration of the transition
+                        transitionDuration),
                 child: Icon(
                   isSelected
                       ? CupertinoIcons.clear_circled

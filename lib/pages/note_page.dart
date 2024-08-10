@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_quill/flutter_quill.dart';
+import 'package:my_notes_app/widgets/delete_note_dialog.dart';
 import 'package:my_notes_app/widgets/my_quill_toolbar.dart';
 
 class NotePage extends StatefulWidget {
@@ -58,7 +59,9 @@ class _NotePageState extends State<NotePage> {
             color: CupertinoColors.destructiveRed,
             size: 24,
           ),
-          onPressed: () {},
+          onPressed: () => showCupertinoDialog(
+              context: context,
+              builder: (context) => DeleteNoteDialog(context: context)),
         ),
         backgroundColor: CupertinoColors.black,
         padding: const EdgeInsetsDirectional.symmetric(horizontal: 2),

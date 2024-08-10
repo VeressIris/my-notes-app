@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:my_notes_app/pages/note_page.dart';
+import 'package:my_notes_app/widgets/delete_note_dialog.dart';
 
 class Note extends StatefulWidget {
   const Note(
@@ -21,34 +22,8 @@ class _NoteState extends State<Note> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onLongPress: () => showCupertinoDialog(
-        context: context,
-        builder: (context) => CupertinoAlertDialog(
-          title: const Text('Delete Note', style: TextStyle(fontSize: 18)),
-          content: Container(
-            margin: const EdgeInsets.only(top: 8),
-            child: const Text('Are you sure you want to delete this note?',
-                style: TextStyle(fontSize: 16)),
-          ),
-          actions: [
-            CupertinoDialogAction(
-              child: const Text('Cancel'),
-              onPressed: () => Navigator.pop(context),
-            ),
-            CupertinoDialogAction(
-              child: const Text(
-                'Delete',
-                style: TextStyle(color: CupertinoColors.destructiveRed),
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-                setState(() {
-                  // Delete the note
-                });
-              },
-            ),
-          ],
-        ),
-      ),
+          context: context,
+          builder: (context) => DeleteNoteDialog(context: context)),
       onTap: () {
         Navigator.push(
             context,
