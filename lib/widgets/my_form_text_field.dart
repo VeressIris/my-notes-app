@@ -49,20 +49,14 @@ class _MyFormTextFieldState extends State<MyFormTextField> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 250,
-      child: Padding(
+      child: CupertinoTextFormFieldRow(
+        controller: widget.controller,
+        focusNode: _focusNode,
+        placeholder: widget.text,
         padding: const EdgeInsets.all(8),
-        child: CupertinoTextField(
-          controller: widget.controller,
-          focusNode: _focusNode,
-          placeholder: widget.text,
-          padding: const EdgeInsets.all(12),
-          spellCheckConfiguration: const SpellCheckConfiguration.disabled(),
-          decoration: border,
-          obscureText: widget.obscureText,
-          onTapOutside: (event) {
-            FocusScope.of(context).unfocus();
-          },
-        ),
+        decoration: border,
+        obscureText: widget.obscureText,
+        validator: (value) => value!.isEmpty ? 'Fields cannot be empty.' : null,
       ),
     );
   }

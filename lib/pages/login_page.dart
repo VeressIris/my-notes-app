@@ -48,7 +48,8 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () {
                     // Handle login logic here
                   },
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  minSize: 40,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: const Text('Login', style: TextStyle(fontSize: 16)),
                 ),
               ),

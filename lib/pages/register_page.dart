@@ -57,9 +57,10 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: CupertinoButton(
                   color: CupertinoColors.activeOrange,
                   onPressed: () {
-                    // Handle registration logic here
+                    // Handle login logic here
                   },
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  minSize: 40,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: const Text('Register', style: TextStyle(fontSize: 16)),
                 ),
               ),
