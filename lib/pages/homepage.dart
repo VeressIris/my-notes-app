@@ -15,6 +15,7 @@ class Homepage extends StatefulWidget {
 
 class _HomePageState extends State<Homepage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final DateTime now = DateTime.now();
 
   final List<Map<String, String>> notes = [
     {
@@ -101,12 +102,16 @@ class _HomePageState extends State<Homepage> {
                 onPressed: () {
                   // open new empty note
                   Navigator.push(
-                    context,
-                    CupertinoPageRoute(
-                      builder: (context) =>
-                          const NotePage(title: "", content: ""),
-                    ),
-                  );
+                      context,
+                      CupertinoPageRoute(
+                        builder: (context) => NotePage(
+                          title: "",
+                          content: "",
+                          tags: "",
+                          dateCreated:
+                              DateTime(now.year, now.month, now.day).toString(),
+                        ),
+                      ));
                 },
                 color: CupertinoColors.activeOrange,
                 borderRadius: BorderRadius.circular(30.0),

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:my_notes_app/pages/note_page.dart';
 import 'package:my_notes_app/widgets/delete_note_dialog.dart';
+import 'package:my_notes_app/widgets/note_data.dart';
 import 'package:my_notes_app/widgets/stateless_tag.dart';
 import 'package:my_notes_app/widgets/tag.dart';
 
@@ -32,8 +33,11 @@ class _NoteState extends State<Note> {
         Navigator.push(
             context,
             CupertinoPageRoute(
-                builder: (context) =>
-                    NotePage(title: widget.title, content: widget.content)));
+                builder: (context) => NotePage(
+                    title: widget.title,
+                    content: widget.content,
+                    dateCreated: widget.dateCreated,
+                    tags: widget.tags)));
       },
       child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
@@ -71,25 +75,11 @@ class _NoteState extends State<Note> {
                       height: 1.5,
                       overflow: TextOverflow.ellipsis),
                 ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      widget.dateCreated,
-                      style: const TextStyle(
-                          color: CupertinoColors.systemGrey,
-                          fontSize: 16,
-                          height: 1.35),
-                    ),
-                    const Text(
-                      ' | ',
-                      style: TextStyle(
-                          color: CupertinoColors.systemGrey,
-                          fontSize: 20,
-                          height: 1.35),
-                    ),
-                    StatelessTag(name: widget.tags),
-                  ],
+                NoteData(
+                  dateCreated: widget.dateCreated,
+                  tags: widget.tags,
+                  showAdd: false,
+                  showBorder: true ,
                 )
               ],
             ),

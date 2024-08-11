@@ -2,12 +2,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:my_notes_app/widgets/delete_note_dialog.dart';
 import 'package:my_notes_app/widgets/my_quill_toolbar.dart';
+import 'package:my_notes_app/widgets/note_data.dart';
 
 class NotePage extends StatefulWidget {
-  const NotePage({super.key, required this.title, required this.content});
+  const NotePage(
+      {super.key,
+      required this.title,
+      required this.content,
+      required this.dateCreated,
+      required this.tags});
 
   final String title;
   final String content;
+  final String dateCreated;
+  final String tags;
 
   @override
   State<NotePage> createState() => _NotePageState();
@@ -73,6 +81,11 @@ class _NotePageState extends State<NotePage> {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Column(
                 children: [
+                  NoteData(
+                      dateCreated: widget.dateCreated,
+                      tags: widget.tags,
+                      showAdd: true,
+                      showBorder: false),
                   CupertinoTextField(
                     controller: TextEditingController(text: widget.title),
                     placeholder: 'Title',

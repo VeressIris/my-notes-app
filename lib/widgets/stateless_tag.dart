@@ -1,24 +1,25 @@
 import 'package:flutter/cupertino.dart';
 
 class StatelessTag extends StatelessWidget {
-  const StatelessTag({super.key, required this.name});
+  const StatelessTag({super.key, required this.name, required this.showBorder});
 
   final String name;
+  final bool showBorder;
 
   @override
   Widget build(BuildContext context) {
-    final bool showTag = name != "No tags";
+    final bool showTagIcon = name != "No tags";
 
     return ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 120),
       child: Container(
-        padding: _getPadding(showTag),
-        decoration: _getDecoration(showTag),
+        padding: _getPadding(showTagIcon),
+        decoration: _getDecoration(showTagIcon),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (showTag) _buildTagIcon(),
-            if (showTag) const SizedBox(width: 6),
+            if (showTagIcon) _buildTagIcon(),
+            if (showTagIcon) const SizedBox(width: 6),
             Flexible(child: _buildTagName()),
           ],
         ),
@@ -33,16 +34,23 @@ class StatelessTag extends StatelessWidget {
   }
 
   BoxDecoration _getDecoration(bool showTag) {
-    return showTag
-        ? BoxDecoration(
-            color: CupertinoColors.darkBackgroundGray,
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(
-              color: CupertinoColors.systemGrey,
-              width: 1,
-            ),
-          )
-        : const BoxDecoration();
+    if (!showBorder) {
+      return BoxDecoration(
+        color: CupertinoColors.darkBackgroundGray,
+        borderRadius: BorderRadius.circular(20),
+      );
+    }
+    if (showTag) {
+      return BoxDecoration(
+        color: CupertinoColors.darkBackgroundGray,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: CupertinoColors.systemGrey,
+          width: 1,
+        ),
+      );
+    }
+    return const BoxDecoration();
   }
 
   Widget _buildTagIcon() {
