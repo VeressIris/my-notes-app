@@ -21,6 +21,7 @@ class _LoginPageState extends State<LoginPage> {
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Form(
+          key: formKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,

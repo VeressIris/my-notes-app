@@ -23,6 +23,7 @@ class _RegisterPageState extends State<RegisterPage> {
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Form(
+          key: formKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
