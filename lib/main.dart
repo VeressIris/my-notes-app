@@ -1,5 +1,6 @@
 import 'package:flutter_quill/translations.dart';
 import 'package:my_notes_app/pages/homepage.dart';
+import 'package:my_notes_app/pages/login_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/foundation.dart';
@@ -18,19 +19,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const CupertinoApp(
-      title: 'My notes',
-      theme: CupertinoThemeData(
-        brightness: Brightness.dark,
-        primaryColor: CupertinoColors.systemOrange,
-      ),
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        FlutterQuillLocalizations
-            .delegate, // Add the Quill localization delegate
-      ],
-      home: Homepage(title: 'My notes'),
-    );
+        title: 'My notes',
+        theme: CupertinoThemeData(
+          brightness: Brightness.dark,
+          primaryColor: CupertinoColors.systemOrange,
+        ),
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+          FlutterQuillLocalizations
+              .delegate, // Add the Quill localization delegate
+        ],
+        // home: Homepage(title: 'My notes'),
+        home: LoginPage());
   }
 }
