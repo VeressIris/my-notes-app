@@ -20,39 +20,45 @@ class _HomePageState extends State<Homepage> {
     {
       'title': 'My first note',
       'content': 'This is the content of my first note',
-      'dateCreated': '2022-01-01'
+      'dateCreated': '2022-01-01',
+      'tags': 'tag1, tag2'
     },
     {
       'title': 'My second note',
       'content': 'This is the content of my second note',
-      'dateCreated': '2022-01-02'
+      'dateCreated': '2022-01-02',
+      'tags': 'tag1, tag2'
     },
     {
       'title': 'My third note',
       'content': 'This is the content of my third note',
-      'dateCreated': '2022-01-03'
+      'dateCreated': '2022-01-03',
+      'tags': 'tag1, tag2, tag3'
     },
     {
       'title': 'My whatever note',
       'content': 'This is the content of a note',
-      'dateCreated': '2022-01-04'
+      'dateCreated': '2022-01-04',
+      'tags': 'tag1'
     },
     {
       'title': '',
       'content': 'This is the content of my second whatever note',
-      'dateCreated': '2022-01-04'
+      'dateCreated': '2022-01-04',
+      'tags': 'tag1, tag2'
     },
     {
       'title': 'My second whatever note',
       'content': 'This is the content of my second whatever note blah blah',
-      'dateCreated': '2022-01-04'
+      'dateCreated': '2022-01-04',
     },
     {'title': '', 'content': 'BLAH BLAH BLAH', 'dateCreated': '2022-01-04'},
     {
       'title': 'My THIRD whatever note',
       'content':
           'This is the content of my third whatever note ahaha blah blah',
-      'dateCreated': '2022-01-09'
+      'dateCreated': '2022-01-09',
+      'tags': 'tag1, tag2'
     },
   ];
 
@@ -82,6 +88,7 @@ class _HomePageState extends State<Homepage> {
                     title: note['title']!,
                     content: note['content']!,
                     dateCreated: note['dateCreated']!,
+                    tags: note['tags'] ?? 'No tags',
                   );
                 }).toList(),
               ),
@@ -170,8 +177,7 @@ class _HomePageState extends State<Homepage> {
                   Navigator.push(
                     context,
                     CupertinoPageRoute(
-                      builder: (context) =>
-                          const TagsPage(),
+                      builder: (context) => const TagsPage(),
                     ),
                   );
                 }),

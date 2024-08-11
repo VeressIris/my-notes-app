@@ -1,17 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:my_notes_app/pages/note_page.dart';
 import 'package:my_notes_app/widgets/delete_note_dialog.dart';
+import 'package:my_notes_app/widgets/stateless_tag.dart';
+import 'package:my_notes_app/widgets/tag.dart';
 
 class Note extends StatefulWidget {
   const Note(
       {super.key,
       required this.title,
       required this.content,
-      required this.dateCreated});
+      required this.dateCreated,
+      required this.tags});
 
   final String title;
   final String content;
   final String dateCreated;
+  final String tags; // TODO: change this to a list of strings
 
   @override
   State<Note> createState() => _NoteState();
@@ -67,13 +71,26 @@ class _NoteState extends State<Note> {
                       height: 1.5,
                       overflow: TextOverflow.ellipsis),
                 ),
-                Text(
-                  widget.dateCreated,
-                  style: const TextStyle(
-                      color: CupertinoColors.systemGrey,
-                      fontSize: 16,
-                      height: 1.35),
-                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      widget.dateCreated,
+                      style: const TextStyle(
+                          color: CupertinoColors.systemGrey,
+                          fontSize: 16,
+                          height: 1.35),
+                    ),
+                    const Text(
+                      ' | ',
+                      style: TextStyle(
+                          color: CupertinoColors.systemGrey,
+                          fontSize: 20,
+                          height: 1.35),
+                    ),
+                    StatelessTag(name: widget.tags),
+                  ],
+                )
               ],
             ),
           )),

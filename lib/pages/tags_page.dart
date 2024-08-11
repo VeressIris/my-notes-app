@@ -36,6 +36,7 @@ class _TagsPageState extends State<TagsPage> {
                     title: note['title']!,
                     content: note['content']!,
                     dateCreated: note['dateCreated']!,
+                    tags: note['tags'] ?? 'No tags',
                   );
                 }).toList(),
               ),
