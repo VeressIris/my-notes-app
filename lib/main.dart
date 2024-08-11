@@ -4,10 +4,16 @@ import 'package:my_notes_app/pages/login_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter/foundation.dart';
+import 'package:supabase/supabase.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'secrets/secrets.dart';
 
-void main() {
+void main() async {
   debugDefaultTargetPlatformOverride =
       TargetPlatform.iOS; // force Cupertino theme onto Quill
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await Supabase.initialize(url: Secrets.projectURL, anonKey: Secrets.anonKey);
 
   runApp(const MyApp());
 }
