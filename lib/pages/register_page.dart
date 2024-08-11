@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:my_notes_app/pages/login_page.dart';
+import 'package:my_notes_app/widgets/my_form_text_field.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
@@ -18,76 +19,16 @@ class RegisterPage extends StatelessWidget {
             child: Text('Register',
                 style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
           ),
-          SizedBox(
-            width: 250,
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: CupertinoTextField(
-                placeholder: 'Username',
-                padding: const EdgeInsets.all(12),
-                spellCheckConfiguration:
-                    const SpellCheckConfiguration.disabled(),
-                decoration: BoxDecoration(
-                  border: Border.all(color: CupertinoColors.systemGrey2),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                onTapOutside: (event) => FocusScope.of(context).unfocus(),
-              ),
-            ),
+          const MyFormTextField(text: 'Username', obscureText: false),
+          const MyFormTextField(
+            text: 'Email',
+            obscureText: false,
           ),
-          SizedBox(
-            width: 250,
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: CupertinoTextField(
-                placeholder: 'Email',
-                padding: const EdgeInsets.all(12),
-                spellCheckConfiguration:
-                    const SpellCheckConfiguration.disabled(),
-                decoration: BoxDecoration(
-                  border: Border.all(color: CupertinoColors.systemGrey2),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                onTapOutside: (event) => FocusScope.of(context).unfocus(),
-              ),
-            ),
+          const MyFormTextField(
+            text: 'Password',
+            obscureText: true,
           ),
-          SizedBox(
-            width: 250,
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: CupertinoTextField(
-                placeholder: 'Password',
-                obscureText: true,
-                spellCheckConfiguration:
-                    const SpellCheckConfiguration.disabled(),
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  border: Border.all(color: CupertinoColors.systemGrey2),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                onTapOutside: (event) => FocusScope.of(context).unfocus(),
-              ),
-            ),
-          ),
-          SizedBox(
-            width: 250,
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: CupertinoTextField(
-                placeholder: 'Confirm password',
-                obscureText: true,
-                spellCheckConfiguration:
-                    const SpellCheckConfiguration.disabled(),
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  border: Border.all(color: CupertinoColors.systemGrey2),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                onTapOutside: (event) => FocusScope.of(context).unfocus(),
-              ),
-            ),
-          ),
+          const MyFormTextField(text: 'Confirm password', obscureText: true),
           Padding(
             padding: const EdgeInsets.only(top: 8, bottom: 16),
             child: CupertinoButton(
