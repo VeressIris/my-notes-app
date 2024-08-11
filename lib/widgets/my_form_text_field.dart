@@ -1,11 +1,16 @@
 import 'package:flutter/cupertino.dart';
 
 class MyFormTextField extends StatefulWidget {
-  const MyFormTextField({super.key, required this.text, required this.obscureText});
+  const MyFormTextField(
+      {super.key,
+      required this.text,
+      required this.controller,
+      this.obscureText = false});
 
   final String text;
-  final bool obscureText;
-  
+  final TextEditingController controller;
+  final obscureText;
+
   @override
   _MyFormTextFieldState createState() => _MyFormTextFieldState();
 }
@@ -41,18 +46,13 @@ class _MyFormTextFieldState extends State<MyFormTextField> {
   }
 
   @override
-  void dispose() {
-    _focusNode.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: 250,
       child: Padding(
         padding: const EdgeInsets.all(8),
         child: CupertinoTextField(
+          controller: widget.controller,
           focusNode: _focusNode,
           placeholder: widget.text,
           padding: const EdgeInsets.all(12),
@@ -65,5 +65,11 @@ class _MyFormTextFieldState extends State<MyFormTextField> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
   }
 }
