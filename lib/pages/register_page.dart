@@ -19,12 +19,18 @@ class _RegisterPageState extends State<RegisterPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final verifyPasswordController = TextEditingController();
+  final passwordsMatchNotifier = ValueNotifier<bool>(true);
 
   void register() {
+    FocusScope.of(context).unfocus();
+
     final auth = AuthService(client: Supabase.instance.client);
 
-    if (passwordController.text != verifyPasswordController.text) {
-      throw Exception('Passwords do not match.');
+    final passwordsMatch =
+        passwordController.text == verifyPasswordController.text;
+    passwordsMatchNotifier.value = passwordsMatch;
+    if (!passwordsMatch) {
+      throw Exception('Passwords don\'t match.');
     }
 
     try {
@@ -63,15 +69,27 @@ class _RegisterPageState extends State<RegisterPage> {
                 text: 'Email',
                 controller: emailController,
               ),
-              MyFormTextField(
-                text: 'Password',
-                obscureText: true,
-                controller: passwordController,
+              ValueListenableBuilder<bool>(
+                valueListenable: passwordsMatchNotifier,
+                builder: (context, passwordsMatch, child) {
+                  return MyFormTextField(
+                    text: 'Password',
+                    obscureText: true,
+                    passwordsMatchNotifier: passwordsMatchNotifier,
+                    controller: passwordController,
+                  );
+                },
               ),
-              MyFormTextField(
-                text: 'Confirm password',
-                obscureText: true,
-                controller: verifyPasswordController,
+              ValueListenableBuilder<bool>(
+                valueListenable: passwordsMatchNotifier,
+                builder: (context, passwordsMatch, child) {
+                  return MyFormTextField(
+                    text: 'Confirm password',
+                    obscureText: true,
+                    passwordsMatchNotifier: passwordsMatchNotifier,
+                    controller: verifyPasswordController,
+                  );
+                },
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 8, bottom: 16),
@@ -135,6 +153,7 @@ class _RegisterPageState extends State<RegisterPage> {
     emailController.dispose();
     passwordController.dispose();
     verifyPasswordController.dispose();
+    passwordsMatchNotifier.dispose(); // Dispose of the notifier
     super.dispose();
   }
 }

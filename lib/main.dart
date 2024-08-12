@@ -9,8 +9,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'secrets/secrets.dart';
 
 void main() async {
-  debugDefaultTargetPlatformOverride =
-      TargetPlatform.iOS; // force Cupertino theme onto Quill
+  // debugDefaultTargetPlatformOverride =
+  //     TargetPlatform.iOS; // force Cupertino theme onto Quill
 
   WidgetsFlutterBinding.ensureInitialized();
   await Supabase.initialize(url: Secrets.projectURL, anonKey: Secrets.anonKey);

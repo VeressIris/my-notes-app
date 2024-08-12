@@ -1,15 +1,18 @@
 import 'package:flutter/cupertino.dart';
 
 class MyFormTextField extends StatefulWidget {
-  const MyFormTextField(
-      {super.key,
-      required this.text,
-      required this.controller,
-      this.obscureText = false});
+  const MyFormTextField({
+    super.key,
+    required this.text,
+    required this.controller,
+    this.obscureText = false,
+    this.passwordsMatchNotifier,
+  });
 
   final String text;
   final TextEditingController controller;
-  final obscureText;
+  final bool obscureText;
+  final ValueNotifier<bool>? passwordsMatchNotifier;
 
   @override
   _MyFormTextFieldState createState() => _MyFormTextFieldState();
@@ -35,9 +38,30 @@ class _MyFormTextFieldState extends State<MyFormTextField> {
             border: Border.all(color: CupertinoColors.activeOrange),
             borderRadius: BorderRadius.circular(8),
           );
+        } else if (widget.passwordsMatchNotifier != null &&
+            !widget.passwordsMatchNotifier!.value) {
+          border = BoxDecoration(
+            border: Border.all(color: CupertinoColors.systemRed),
+            borderRadius: BorderRadius.circular(8),
+          );
         } else {
           border = BoxDecoration(
             border: Border.all(color: CupertinoColors.systemGrey2),
+            borderRadius: BorderRadius.circular(8),
+          );
+        }
+      });
+    });
+
+    // Listen to password match state changes
+    widget.passwordsMatchNotifier?.addListener(() {
+      setState(() {
+        if (!_focusNode.hasFocus) {
+          border = BoxDecoration(
+            border: Border.all(
+                color: widget.passwordsMatchNotifier!.value
+                    ? CupertinoColors.systemGrey2
+                    : CupertinoColors.systemRed),
             borderRadius: BorderRadius.circular(8),
           );
         }
@@ -64,6 +88,8 @@ class _MyFormTextFieldState extends State<MyFormTextField> {
   @override
   void dispose() {
     _focusNode.dispose();
+    widget.passwordsMatchNotifier!
+        .removeListener(() {}); // Clean up the listener
     super.dispose();
   }
 }
