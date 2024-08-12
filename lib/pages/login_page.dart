@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:my_notes_app/pages/register_page.dart';
+import 'package:my_notes_app/services/auth_service.dart';
 import 'package:my_notes_app/widgets/my_form_text_field.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -14,6 +16,11 @@ class _LoginPageState extends State<LoginPage> {
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
+  void login() {
+    final auth = AuthService(client: Supabase.instance.client);
+    auth.loginWithEmail(emailController.text, passwordController.text);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: CupertinoButton(
                   color: CupertinoColors.activeOrange,
                   onPressed: () {
-                    // Handle login logic here
+                    login();
                   },
                   minSize: 40,
                   padding: const EdgeInsets.symmetric(horizontal: 16),

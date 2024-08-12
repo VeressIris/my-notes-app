@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
 import 'package:my_notes_app/pages/login_page.dart';
+import 'package:my_notes_app/services/auth_service.dart';
 import 'package:my_notes_app/widgets/my_form_text_field.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -16,6 +19,24 @@ class _RegisterPageState extends State<RegisterPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final verifyPasswordController = TextEditingController();
+
+  void register() {
+    final auth = AuthService(client: Supabase.instance.client);
+
+    if (passwordController.text != verifyPasswordController.text) {
+      throw Exception('Passwords do not match.');
+    }
+
+    try {
+      auth.registerWithEmail(
+        usernameController.text,
+        emailController.text,
+        passwordController.text,
+      );
+    } catch (e) {
+      throw Exception('Error registering: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +78,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: CupertinoButton(
                   color: CupertinoColors.activeOrange,
                   onPressed: () {
-                    // Handle login logic here
+                    register();
                   },
                   minSize: 40,
                   padding: const EdgeInsets.symmetric(horizontal: 16),
