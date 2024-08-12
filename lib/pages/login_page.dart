@@ -4,6 +4,7 @@ import 'package:my_notes_app/pages/register_page.dart';
 import 'package:my_notes_app/services/auth_service.dart';
 import 'package:my_notes_app/widgets/my_form_text_field.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:my_notes_app/pages/homepage.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -20,6 +21,12 @@ class _LoginPageState extends State<LoginPage> {
   void login() {
     final auth = AuthService(client: Supabase.instance.client);
     auth.loginWithEmail(emailController.text, passwordController.text);
+
+    Navigator.of(context).push(
+      CupertinoPageRoute(
+        builder: (context) => const Homepage(title: 'My notes'),
+      ),
+    );
   }
 
   @override

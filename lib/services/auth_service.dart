@@ -9,8 +9,8 @@ class AuthService {
   Future<String> registerWithEmail(
       String username, String email, String password) async {
     try {
-      final response = await client.auth
-          .signUp(email: email, password: password, data: {username: username});
+      final response = await client.auth.signUp(
+          email: email, password: password, data: {'username': username});
 
       if (response.user == null) {
         throw Exception('User is null');

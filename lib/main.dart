@@ -24,20 +24,23 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const CupertinoApp(
+    final client = Supabase.instance.client;
+
+    return CupertinoApp(
         title: 'My notes',
-        theme: CupertinoThemeData(
+        theme: const CupertinoThemeData(
           brightness: Brightness.dark,
           primaryColor: CupertinoColors.systemOrange,
         ),
-        localizationsDelegates: [
+        localizationsDelegates: const [
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
           FlutterQuillLocalizations
               .delegate, // Add the Quill localization delegate
         ],
-        // home: Homepage(title: 'My notes'),
-        home: LoginPage());
+        home: client.auth.currentUser == null
+            ? const LoginPage()
+            : const Homepage(title: 'My notes'));
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:my_notes_app/pages/homepage.dart';
 import 'package:my_notes_app/pages/login_page.dart';
 import 'package:my_notes_app/services/auth_service.dart';
 import 'package:my_notes_app/widgets/my_form_text_field.dart';
@@ -38,6 +39,12 @@ class _RegisterPageState extends State<RegisterPage> {
         usernameController.text,
         emailController.text,
         passwordController.text,
+      );
+
+      Navigator.of(context).push(
+        CupertinoPageRoute(
+          builder: (context) => const Homepage(title: 'My notes'),
+        ),
       );
     } catch (e) {
       throw Exception('Error registering: $e');

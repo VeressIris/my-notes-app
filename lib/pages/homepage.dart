@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:my_notes_app/pages/note_page.dart';
 import 'package:my_notes_app/pages/tags_page.dart';
 import 'package:my_notes_app/widgets/note.dart';
+import 'package:my_notes_app/services/auth_service.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:my_notes_app/pages/login_page.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key, required this.title});
@@ -62,6 +65,18 @@ class _HomePageState extends State<Homepage> {
       'tags': 'tag1, tag2'
     },
   ];
+
+  void logout() {
+    final auth = AuthService(client: Supabase.instance.client);
+    auth.logout();
+
+    Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (context) => const LoginPage(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -194,7 +209,9 @@ class _HomePageState extends State<Homepage> {
             CupertinoListTile(
                 title: const Text('Logout'),
                 leading: const Icon(Icons.logout),
-                onTap: () {}),
+                onTap: () {
+                  logout();
+                }),
           ],
         ),
       ),
