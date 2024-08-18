@@ -1,9 +1,9 @@
 import 'package:flutter_quill/translations.dart';
+import 'package:localstorage/localstorage.dart';
 import 'package:my_notes_app/pages/homepage.dart';
 import 'package:my_notes_app/pages/login_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'secrets/secrets.dart';
 
@@ -13,6 +13,7 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
   await Supabase.initialize(url: Secrets.projectURL, anonKey: Secrets.anonKey);
+  await initLocalStorage();
 
   runApp(const MyApp());
 }

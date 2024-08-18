@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
+import 'package:localstorage/localstorage.dart';
 import 'package:my_notes_app/pages/homepage.dart';
 import 'package:my_notes_app/pages/login_page.dart';
 import 'package:my_notes_app/services/auth_service.dart';
@@ -40,6 +41,9 @@ class _RegisterPageState extends State<RegisterPage> {
         emailController.text,
         passwordController.text,
       );
+
+      localStorage.setItem('username',
+          client.auth.currentSession!.user.userMetadata!['username']);
 
       Navigator.of(context).push(
         CupertinoPageRoute(

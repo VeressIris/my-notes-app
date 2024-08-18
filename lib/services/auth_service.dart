@@ -1,3 +1,4 @@
+import 'package:localstorage/localstorage.dart';
 import 'package:my_notes_app/services/database_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -51,6 +52,7 @@ class AuthService {
   void logout() async {
     try {
       await client.auth.signOut();
+      localStorage.setItem('username', '');
       print("Logged out");
     } catch (e) {
       throw Exception(e.toString());

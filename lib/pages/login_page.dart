@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
+import 'package:localstorage/localstorage.dart';
 import 'package:my_notes_app/pages/register_page.dart';
 import 'package:my_notes_app/services/auth_service.dart';
 import 'package:my_notes_app/widgets/my_form_text_field.dart';
@@ -19,10 +20,15 @@ class _LoginPageState extends State<LoginPage> {
   final passwordController = TextEditingController();
 
   void login() async {
-    final auth = AuthService(client: Supabase.instance.client);
+    final client = Supabase.instance.client;
+    final auth = AuthService(client: client);
+
     try {
-      await auth.loginWithEmail(
-          emailController.text, passwordController.text);
+      await auth.loginWithEmail(emailController.text, passwordController.text);
+
+      localStorage.setItem('username',
+          client.auth.currentSession!.user.userMetadata!['username']);
+
       Navigator.of(context).push(
         CupertinoPageRoute(
           builder: (context) => const Homepage(title: 'My notes'),

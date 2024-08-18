@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:localstorage/localstorage.dart';
 import 'package:my_notes_app/pages/note_page.dart';
 import 'package:my_notes_app/pages/tags_page.dart';
 import 'package:my_notes_app/widgets/my_dialog.dart';
@@ -20,8 +21,7 @@ class Homepage extends StatefulWidget {
 class _HomePageState extends State<Homepage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final DateTime now = DateTime.now();
-  final username = Supabase
-      .instance.client.auth.currentSession!.user.userMetadata?['username'];
+  final username = localStorage.getItem('username');
 
   final List<Map<String, String>> notes = [
     {
@@ -158,7 +158,7 @@ class _HomePageState extends State<Homepage> {
                       padding: EdgeInsets.only(right: 16),
                       child: Icon(CupertinoIcons.person, size: 48),
                     ),
-                    Text(username,
+                    Text(username!,
                         style: const TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold)),
                   ],
