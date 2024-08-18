@@ -17,6 +17,14 @@ class AuthService {
         throw Exception('User is null');
       }
 
+      // add new user to db
+      final dbService = DatabaseService(client: client);
+      try {
+        await dbService.addUserToDb(username, response.user!.id);
+      } catch (e) {
+        throw Exception(e.toString());
+      }
+
       return response.user!.id;
     } catch (e) {
       throw Exception(e.toString());

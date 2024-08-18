@@ -37,19 +37,11 @@ class _RegisterPageState extends State<RegisterPage> {
     }
 
     try {
-      final userID = await auth.registerWithEmail(
+      await auth.registerWithEmail(
         usernameController.text,
         emailController.text,
         passwordController.text,
       );
-
-      // add new user to db
-      final dbService = DatabaseService(client: client);
-      try {
-        await dbService.addUserToDb(usernameController.text, userID);
-      } catch (e) {
-        throw Exception(e.toString());
-      }
 
       Navigator.of(context).push(
         CupertinoPageRoute(
