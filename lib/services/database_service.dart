@@ -16,4 +16,16 @@ class DatabaseService {
       throw Exception(e.toString());
     }
   }
+
+  Future<List<Map>> getUserPublicNotes(String username) async {
+    try {
+      final data = await client
+          .from('users')
+          .select('publicNotes')
+          .eq('username', username);
+      return data;
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
 }

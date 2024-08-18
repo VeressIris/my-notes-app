@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:my_notes_app/pages/note_page.dart';
 import 'package:my_notes_app/pages/tags_page.dart';
+import 'package:my_notes_app/services/database_service.dart';
 import 'package:my_notes_app/widgets/my_dialog.dart';
 import 'package:my_notes_app/widgets/note.dart';
 import 'package:my_notes_app/services/auth_service.dart';
@@ -22,6 +23,9 @@ class _HomePageState extends State<Homepage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final DateTime now = DateTime.now();
   final username = localStorage.getItem('username');
+
+  final notesFromDb = DatabaseService(client: Supabase.instance.client)
+      .getUserPublicNotes(localStorage.getItem('username')!);
 
   final List<Map<String, String>> notes = [
     {
