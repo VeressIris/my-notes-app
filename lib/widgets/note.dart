@@ -1,10 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:my_notes_app/pages/note_page.dart';
-import 'package:my_notes_app/widgets/delete_note_dialog.dart';
 import 'package:my_notes_app/widgets/my_dialog.dart';
 import 'package:my_notes_app/widgets/note_data.dart';
-import 'package:my_notes_app/widgets/stateless_tag.dart';
-import 'package:my_notes_app/widgets/tag.dart';
 
 class Note extends StatefulWidget {
   const Note(

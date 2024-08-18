@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
 import 'package:my_notes_app/pages/homepage.dart';
 import 'package:my_notes_app/pages/login_page.dart';
 import 'package:my_notes_app/services/auth_service.dart';
-import 'package:my_notes_app/services/database_service.dart';
 import 'package:my_notes_app/widgets/my_form_text_field.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
