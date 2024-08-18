@@ -18,15 +18,19 @@ class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  void login() {
+  void login() async {
     final auth = AuthService(client: Supabase.instance.client);
-    auth.loginWithEmail(emailController.text, passwordController.text);
-
-    Navigator.of(context).push(
-      CupertinoPageRoute(
-        builder: (context) => const Homepage(title: 'My notes'),
-      ),
-    );
+    try {
+      await auth.loginWithEmail(
+          emailController.text, passwordController.text);
+      Navigator.of(context).push(
+        CupertinoPageRoute(
+          builder: (context) => const Homepage(title: 'My notes'),
+        ),
+      );
+    } catch (e) {
+      throw Exception('Error logging in: $e');
+    }
   }
 
   @override

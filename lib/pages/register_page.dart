@@ -22,7 +22,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final verifyPasswordController = TextEditingController();
   final passwordsMatchNotifier = ValueNotifier<bool>(true);
 
-  void register() {
+  void register() async {
     FocusScope.of(context).unfocus();
 
     final auth = AuthService(client: Supabase.instance.client);
@@ -35,7 +35,7 @@ class _RegisterPageState extends State<RegisterPage> {
     }
 
     try {
-      auth.registerWithEmail(
+      await auth.registerWithEmail(
         usernameController.text,
         emailController.text,
         passwordController.text,
