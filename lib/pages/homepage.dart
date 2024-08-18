@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:my_notes_app/main.dart';
 import 'package:my_notes_app/pages/note_page.dart';
 import 'package:my_notes_app/pages/tags_page.dart';
+import 'package:my_notes_app/widgets/my_dialog.dart';
 import 'package:my_notes_app/widgets/note.dart';
 import 'package:my_notes_app/services/auth_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -210,7 +212,17 @@ class _HomePageState extends State<Homepage> {
                 title: const Text('Logout'),
                 leading: const Icon(Icons.logout),
                 onTap: () {
-                  logout();
+                  showCupertinoDialog(
+                      context: context,
+                      builder: (context) => MyDialog(
+                            title: 'Logout',
+                            description: 'Are you sure you want to logout?',
+                            confirmText: 'Logout',
+                            context: context,
+                            onPressed: () {
+                              logout();
+                            },
+                          ));
                 }),
           ],
         ),

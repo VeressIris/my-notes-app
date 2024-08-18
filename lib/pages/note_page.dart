@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_quill/flutter_quill.dart';
-import 'package:my_notes_app/widgets/delete_note_dialog.dart';
+import 'package:my_notes_app/widgets/my_dialog.dart';
 import 'package:my_notes_app/widgets/my_quill_toolbar.dart';
 import 'package:my_notes_app/widgets/note_data.dart';
 
@@ -69,7 +69,19 @@ class _NotePageState extends State<NotePage> {
           ),
           onPressed: () => showCupertinoDialog(
               context: context,
-              builder: (context) => DeleteNoteDialog(context: context)),
+              builder: (context) => MyDialog(
+                    title: 'Delete Note',
+                    description: 'Are you sure you want to delete this note?',
+                    confirmText: 'Delete',
+                    context: context,
+                    onPressed: () {
+                      Navigator.pop(context); // get out of dialog
+                      Navigator.pop(context); // go back to previous page
+                      setState(() {
+                        // Delete the note
+                      });
+                    },
+                  )),
         ),
         backgroundColor: CupertinoColors.black,
         padding: const EdgeInsetsDirectional.symmetric(horizontal: 2),

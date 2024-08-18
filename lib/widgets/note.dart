@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:my_notes_app/pages/note_page.dart';
 import 'package:my_notes_app/widgets/delete_note_dialog.dart';
+import 'package:my_notes_app/widgets/my_dialog.dart';
 import 'package:my_notes_app/widgets/note_data.dart';
 import 'package:my_notes_app/widgets/stateless_tag.dart';
 import 'package:my_notes_app/widgets/tag.dart';
@@ -28,7 +29,19 @@ class _NoteState extends State<Note> {
     return GestureDetector(
       onLongPress: () => showCupertinoDialog(
           context: context,
-          builder: (context) => DeleteNoteDialog(context: context)),
+          builder: (context) => MyDialog(
+                title: 'Delete Note',
+                description: 'Are you sure you want to delete this note?',
+                confirmText: 'Delete',
+                context: context,
+                onPressed: () {
+                  Navigator.pop(context); // get out of dialog
+                  Navigator.pop(context); // go back to previous page
+                  setState(() {
+                    // Delete the note
+                  });
+                },
+              )),
       onTap: () {
         Navigator.push(
             context,
@@ -79,7 +92,7 @@ class _NoteState extends State<Note> {
                   dateCreated: widget.dateCreated,
                   tags: widget.tags,
                   showAdd: false,
-                  showBorder: true ,
+                  showBorder: true,
                 )
               ],
             ),
