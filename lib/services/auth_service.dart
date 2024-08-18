@@ -1,3 +1,4 @@
+import 'package:my_notes_app/services/database_service.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthService {

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:my_notes_app/pages/homepage.dart';
 import 'package:my_notes_app/pages/login_page.dart';
 import 'package:my_notes_app/services/auth_service.dart';
+import 'package:my_notes_app/services/database_service.dart';
 import 'package:my_notes_app/widgets/my_form_text_field.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -25,7 +26,8 @@ class _RegisterPageState extends State<RegisterPage> {
   void register() async {
     FocusScope.of(context).unfocus();
 
-    final auth = AuthService(client: Supabase.instance.client);
+    final client = Supabase.instance.client;
+    final auth = AuthService(client: client);
 
     final passwordsMatch =
         passwordController.text == verifyPasswordController.text;
@@ -35,11 +37,19 @@ class _RegisterPageState extends State<RegisterPage> {
     }
 
     try {
-      await auth.registerWithEmail(
+      final userID = await auth.registerWithEmail(
         usernameController.text,
         emailController.text,
         passwordController.text,
       );
+
+      // add new user to db
+      final dbService = DatabaseService(client: client);
+      try {
+        await dbService.addUserToDb(usernameController.text, userID);
+      } catch (e) {
+        throw Exception(e.toString());
+      }
 
       Navigator.of(context).push(
         CupertinoPageRoute(
