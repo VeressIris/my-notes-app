@@ -20,6 +20,8 @@ class Homepage extends StatefulWidget {
 class _HomePageState extends State<Homepage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final DateTime now = DateTime.now();
+  final username = Supabase
+      .instance.client.auth.currentSession!.user.userMetadata?['username'];
 
   final List<Map<String, String>> notes = [
     {
@@ -149,15 +151,15 @@ class _HomePageState extends State<Homepage> {
                     const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
                 alignment: Alignment.topCenter,
                 height: 85,
-                child: const Row(
+                child: Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Padding(
+                    const Padding(
                       padding: EdgeInsets.only(right: 16),
                       child: Icon(CupertinoIcons.person, size: 48),
                     ),
-                    Text('John Doe',
-                        style: TextStyle(
+                    Text(username,
+                        style: const TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold)),
                   ],
                 )),
