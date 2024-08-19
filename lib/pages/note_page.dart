@@ -30,8 +30,10 @@ class _NotePageState extends State<NotePage> {
   void initState() {
     super.initState();
 
-    // Convert the plain text content into a Quill Document
-    final doc = Document()..insert(0, widget.content);
+    final doc = Document.fromJson(jsonDecode(widget.content));
+
+    // // Convert the plain text content into a Quill Document
+    // final doc = Document()..insert(0, widget.content);
 
     _controller = QuillController(
       document: doc,

@@ -26,52 +26,6 @@ class _HomePageState extends State<Homepage> {
   final userNotes = DatabaseService(client: Supabase.instance.client)
       .getUserPublicNotes(localStorage.getItem('username')!);
 
-  final List<Map<String, String>> notes = [
-    {
-      'title': 'My first note',
-      'content': 'This is the content of my first note',
-      'dateCreated': '2022-01-01',
-      'tags': 'tag1, tag2'
-    },
-    {
-      'title': 'My second note',
-      'content': 'This is the content of my second note',
-      'dateCreated': '2022-01-02',
-      'tags': 'tag1, tag2'
-    },
-    {
-      'title': 'My third note',
-      'content': 'This is the content of my third note',
-      'dateCreated': '2022-01-03',
-      'tags': 'tag1, tag2, tag3'
-    },
-    {
-      'title': 'My whatever note',
-      'content': 'This is the content of a note',
-      'dateCreated': '2022-01-04',
-      'tags': 'tag1'
-    },
-    {
-      'title': '',
-      'content': 'This is the content of my second whatever note',
-      'dateCreated': '2022-01-04',
-      'tags': 'tag1, tag2'
-    },
-    {
-      'title': 'My second whatever note',
-      'content': 'This is the content of my second whatever note blah blah',
-      'dateCreated': '2022-01-04',
-    },
-    {'title': '', 'content': 'BLAH BLAH BLAH', 'dateCreated': '2022-01-04'},
-    {
-      'title': 'My THIRD whatever note',
-      'content':
-          'This is the content of my third whatever note ahaha blah blah',
-      'dateCreated': '2022-01-09',
-      'tags': 'tag1, tag2'
-    },
-  ];
-
   void logout() {
     final auth = AuthService(client: Supabase.instance.client);
     auth.logout();
