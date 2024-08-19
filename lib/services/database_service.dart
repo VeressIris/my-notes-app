@@ -18,13 +18,24 @@ class DatabaseService {
     }
   }
 
-  Future<List<NoteModel>> getUserPublicNotes(String username) async {
+  Future<List<dynamic>> getUserPublicNotes(String username) async {
     try {
-      final data = await client
+      // Fetch public note IDs for the user
+      final idsData = await client
           .from('users')
           .select('publicNotes')
-          .eq('username', username);
-      return data.map((item) => NoteModel.fromJson(item)).toList();
+          .eq('username', username)
+          .single();
+
+      final ids = idsData['publicNotes'].map((id) => id.toString()).toList();
+
+      final x = await client
+          .from('notes')
+          .select()
+          .eq('uid', "f0ba92ea-bfdc-4c01-beef-2a426e231b7c")
+          .single();
+      print(x);
+      return ids;
     } catch (e) {
       throw Exception(e.toString());
     }

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:my_notes_app/pages/note_page.dart';
 import 'package:my_notes_app/pages/tags_page.dart';
@@ -106,33 +105,15 @@ class _HomePageState extends State<Homepage> {
         child: Stack(
           children: [
             SingleChildScrollView(
-              child: FutureBuilder<List<NoteModel>>(
-                future: notesFromDb, // The future that fetches the notes
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    // Display a loading indicator while waiting for the data
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasError) {
-                    // Display an error message if something went wrong
-                    return Center(child: Text('Error: ${snapshot.error}'));
-                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    // Display a message if no notes were found
-                    return const Center(child: Text('No notes found.'));
-                  } else {
-                    // Build the list of notes if data is available
-                    final notes = snapshot.data!;
-                    return Column(
-                      children: notes.map((note) {
-                        return Note(
-                          title: note!.title,
-                          content: note!.content,
-                          dateCreated: note!.dateCreated,
-                          tags: note!.tags,
-                        );
-                      }).toList(),
-                    );
-                  }
-                },
+              child: Column(
+                children: notes.map((note) {
+                  return Note(
+                    title: note['title']!,
+                    content: note['content']!,
+                    dateCreated: note['dateCreated']!,
+                    tags: note['tags'] ?? 'No tags',
+                  );
+                }).toList(),
               ),
             ),
             Positioned(
@@ -141,19 +122,18 @@ class _HomePageState extends State<Homepage> {
               child: CupertinoButton(
                 padding: const EdgeInsets.all(0),
                 onPressed: () {
-                  // Open new empty note
+                  // open new empty note
                   Navigator.push(
-                    context,
-                    CupertinoPageRoute(
-                      builder: (context) => NotePage(
-                        title: "",
-                        content: "",
-                        tags: "",
-                        dateCreated:
-                            DateTime(now.year, now.month, now.day).toString(),
-                      ),
-                    ),
-                  );
+                      context,
+                      CupertinoPageRoute(
+                        builder: (context) => NotePage(
+                          title: "",
+                          content: "",
+                          tags: "",
+                          dateCreated:
+                              DateTime(now.year, now.month, now.day).toString(),
+                        ),
+                      ));
                 },
                 color: CupertinoColors.activeOrange,
                 borderRadius: BorderRadius.circular(30.0),
@@ -171,25 +151,84 @@ class _HomePageState extends State<Homepage> {
         child: CupertinoListSection(
           children: [
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-              alignment: Alignment.topCenter,
-              height: 85,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.only(right: 16),
-                    child: Icon(CupertinoIcons.person, size: 48),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+                alignment: Alignment.topCenter,
+                height: 85,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(right: 16),
+                      child: Icon(CupertinoIcons.person, size: 48),
+                    ),
+                    Text(username!,
+                        style: const TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold)),
+                  ],
+                )),
+            CupertinoListTile(
+              title: const Text('Public notes'),
+              leading: const Icon(CupertinoIcons.lock_open_fill),
+              trailing: const CupertinoListTileChevron(),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                    builder: (context) => const Homepage(title: "My notes"),
                   ),
-                  Text(
-                    username!,
-                    style: const TextStyle(
-                        fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
+                );
+              },
             ),
-            // Other drawer items here
+            CupertinoListTile(
+                title: const Text('Private notes'),
+                leading: const Icon(CupertinoIcons.lock_fill),
+                trailing: const CupertinoListTileChevron(),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: (context) =>
+                          const Homepage(title: "My private notes"),
+                    ),
+                  );
+                }),
+            CupertinoListTile(
+                title: const Text('Tags'),
+                leading: const Icon(CupertinoIcons.tag_fill),
+                trailing: const CupertinoListTileChevron(),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: (context) => const TagsPage(),
+                    ),
+                  );
+                }),
+            CupertinoListTile(
+                title: const Text('Settings'),
+                leading: const Icon(CupertinoIcons.settings),
+                trailing: const CupertinoListTileChevron(),
+                onTap: () {}),
+            CupertinoListTile(
+                title: const Text('Logout'),
+                leading: const Icon(Icons.logout),
+                onTap: () {
+                  showCupertinoDialog(
+                      context: context,
+                      builder: (context) => MyDialog(
+                            title: 'Logout',
+                            description: 'Are you sure you want to logout?',
+                            confirmText: 'Logout',
+                            context: context,
+                            onPressed: () {
+                              logout();
+                            },
+                          ));
+                }),
           ],
         ),
       ),
