@@ -1,9 +1,9 @@
 class NoteModel {
   final String uid;
   final String title;
-  final Map<String, dynamic> content;
+  final List<dynamic> content;
   final String dateCreated;
-  final List<String> tags;
+  final List<dynamic> tags;
 
   NoteModel({
     required this.uid,

@@ -20,7 +20,6 @@ class DatabaseService {
 
   Future<List<dynamic>> getUserPublicNotes(String username) async {
     try {
-      // Fetch public note IDs for the user
       final idsData = await client
           .from('users')
           .select('publicNotes')
@@ -29,13 +28,13 @@ class DatabaseService {
 
       final ids = idsData['publicNotes'].map((id) => id.toString()).toList();
 
-      final x = await client
-          .from('notes')
-          .select()
-          .eq('uid', "f0ba92ea-bfdc-4c01-beef-2a426e231b7c")
-          .single();
-      print(x);
-      return ids;
+      final List<NoteModel> notes = [];
+      ids.forEach((id) async {
+        final noteData =
+            await client.from('notes').select().eq('uid', id).single();
+        notes.add(NoteModel.fromJson(noteData));
+      });
+      return notes;
     } catch (e) {
       throw Exception(e.toString());
     }
