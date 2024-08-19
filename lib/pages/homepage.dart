@@ -23,8 +23,7 @@ class _HomePageState extends State<Homepage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final DateTime now = DateTime.now();
   final username = localStorage.getItem('username');
-
-  final notesFromDb = DatabaseService(client: Supabase.instance.client)
+  final userNotes = DatabaseService(client: Supabase.instance.client)
       .getUserPublicNotes(localStorage.getItem('username')!);
 
   final List<Map<String, String>> notes = [
@@ -105,17 +104,38 @@ class _HomePageState extends State<Homepage> {
         child: Stack(
           children: [
             SingleChildScrollView(
-              child: Column(
-                children: notes.map((note) {
-                  return Note(
-                    title: note['title']!,
-                    content: note['content']!,
-                    dateCreated: note['dateCreated']!,
-                    tags: note['tags'] ?? 'No tags',
-                  );
-                }).toList(),
-              ),
-            ),
+                child: FutureBuilder(
+                    future: userNotes,
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return const Center(
+                            child: CupertinoActivityIndicator());
+                      }
+                      final notes = snapshot.data!;
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: notes.length,
+                        itemBuilder: (context, index) {
+                          final note = notes[index];
+
+                          // Convert content and tags to strings if they are lists
+                          final content = (note.content is List)
+                              ? (note.content as List<dynamic>).join(', ')
+                              : note.content.toString();
+
+                          final tags = (note.tags is List)
+                              ? (note.tags as List<dynamic>).join(', ')
+                              : note.tags.toString();
+
+                          return Note(
+                            title: note.title,
+                            content: content,
+                            dateCreated: note.dateCreated,
+                            tags: tags,
+                          );
+                        },
+                      );
+                    })),
             Positioned(
               bottom: 32,
               right: 32,

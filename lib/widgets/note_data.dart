@@ -28,7 +28,10 @@ class NoteData extends StatelessWidget {
           style: TextStyle(
               color: CupertinoColors.systemGrey, fontSize: 20, height: 1.35),
         ),
-        StatelessTag(name: tags, showBorder: showBorder),
+        StatelessTag(
+            name: tags.toString(),
+            showBorder:
+                showBorder), // TODO: change tags.toString() to something adequate
         showAdd
             ? CupertinoButton(
                 child: Container(
