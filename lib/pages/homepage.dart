@@ -23,8 +23,14 @@ class _HomePageState extends State<Homepage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final DateTime now = DateTime.now();
   final username = localStorage.getItem('username');
-  final userNotes = DatabaseService(client: Supabase.instance.client)
-      .getUserPublicNotes(localStorage.getItem('username')!);
+  Future<List<dynamic>>? userNotes;
+
+  @override
+  void initState() {
+    super.initState();
+    userNotes = DatabaseService(client: Supabase.instance.client)
+        .getUserPublicNotes(localStorage.getItem('username')!);
+  }
 
   void logout() {
     final auth = AuthService(client: Supabase.instance.client);
@@ -37,6 +43,59 @@ class _HomePageState extends State<Homepage> {
       ),
     );
   }
+
+  final List<Map<String, String>> notes = [
+    {
+      'title': 'My first note',
+      'content': 'This is the content of my first note',
+      'dateCreated': '2022-01-01',
+      'tags': 'tag1, tag2'
+    },
+    {
+      'title': 'My second note',
+      'content': 'This is the content of my second note',
+      'dateCreated': '2022-01-02',
+      'tags': 'tag1, tag2'
+    },
+    {
+      'title': 'My third note',
+      'content': 'This is the content of my third note',
+      'dateCreated': '2022-01-03',
+      'tags': 'tag1, tag2, tag3'
+    },
+    {
+      'title': 'My whatever note',
+      'content': 'This is the content of a note',
+      'dateCreated': '2022-01-04',
+      'tags': 'tag1'
+    },
+    {
+      'title': '',
+      'content': 'This is the content of my second whatever note',
+      'dateCreated': '2022-01-04',
+      'tags': 'tag1, tag2'
+    },
+    {
+      'title': 'My second whatever note',
+      'content': 'This is the content of my second whatever note blah blah',
+      'dateCreated': '2022-01-04',
+    },
+    {'title': '', 'content': 'BLAH BLAH BLAH', 'dateCreated': '2022-01-04'},
+    {
+      'title': 'My THIRD whatever note',
+      'content':
+          'This is the content of my third whatever note ahaha blah blah',
+      'dateCreated': '2022-01-09',
+      'tags': 'tag1, tag2'
+    },
+    {
+      'title': 'Bottom note',
+      'content':
+          'This is the content of my third whatever note bro idk if i can do this anymore help',
+      'dateCreated': '2024-08-28',
+      'tags': 'tag1, tag2, help me'
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -58,38 +117,51 @@ class _HomePageState extends State<Homepage> {
         child: Stack(
           children: [
             SingleChildScrollView(
-                child: FutureBuilder(
-                    future: userNotes,
-                    builder: (context, snapshot) {
-                      if (!snapshot.hasData) {
-                        return const Center(
-                            child: CupertinoActivityIndicator());
-                      }
-                      final notes = snapshot.data!;
-                      return ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: notes.length,
-                        itemBuilder: (context, index) {
-                          final note = notes[index];
+              // child: FutureBuilder(
+              //     future: userNotes,
+              //     builder: (context, snapshot) {
+              //       if (!snapshot.hasData) {
+              //         return const Center(
+              //             child: CupertinoActivityIndicator());
+              //       }
+              //       final notes = snapshot.data!;
+              //       return ListView.builder(
+              //         shrinkWrap: true,
+              //         itemCount: notes.length,
+              //         itemBuilder: (context, index) {
+              //           final note = notes[index];
 
-                          // Convert content and tags to strings if they are lists
-                          final content = (note.content is List)
-                              ? (note.content as List<dynamic>).join(', ')
-                              : note.content.toString();
+              //           // Convert content and tags to strings if they are lists
+              //           final content = (note.content is List)
+              //               ? "[" +
+              //                   (note.content as List<dynamic>).join(', ') +
+              //                   "]"
+              //               : note.content.toString();
 
-                          final tags = (note.tags is List)
-                              ? (note.tags as List<dynamic>).join(', ')
-                              : note.tags.toString();
+              //           final tags = (note.tags is List)
+              //               ? (note.tags as List<dynamic>).join(', ')
+              //               : note.tags.toString();
 
-                          return Note(
-                            title: note.title,
-                            content: content,
-                            dateCreated: note.dateCreated,
-                            tags: tags,
-                          );
-                        },
-                      );
-                    })),
+              //           return Note(
+              //             title: note.title,
+              //             content: content,
+              //             dateCreated: note.dateCreated,
+              //             tags: tags,
+              //           );
+              //         },
+              //       );
+              //     })
+              child: Column(
+                children: notes.map((note) {
+                  return Note(
+                    title: note['title']!,
+                    content: note['content']!,
+                    dateCreated: note['dateCreated']!,
+                    tags: note['tags'] ?? 'No tags',
+                  );
+                }).toList(),
+              ),
+            ),
             Positioned(
               bottom: 32,
               right: 32,
@@ -123,12 +195,13 @@ class _HomePageState extends State<Homepage> {
       ),
       drawer: Drawer(
         child: CupertinoListSection(
+          backgroundColor: const Color.fromARGB(255, 28, 28, 30),
+          topMargin: 0, // remove space between top of screen and start of list
           children: [
             Container(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+                    const EdgeInsets.symmetric(horizontal: 18, vertical: 24),
                 alignment: Alignment.topCenter,
-                height: 85,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [

@@ -55,7 +55,6 @@ class _NoteState extends State<Note> {
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
             constraints: const BoxConstraints(
               minWidth: 395,
-              maxWidth: 395,
             ),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
